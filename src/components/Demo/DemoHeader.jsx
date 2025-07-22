@@ -1,6 +1,7 @@
 import React,{useState, useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import {nav} from "../../data";
+import Auth from "../Demo/Auth/Auth"
 
 
 const DemoHeader =()=>{
@@ -33,13 +34,18 @@ const DemoHeader =()=>{
                      ))}
                 </div>
                 <div className ='relative'>
-                    <button className ='hidden text-sm sm:flex items-center gap-5'>Sign in</button>
+                    <button className ='hidden text-sm sm:flex items-center gap-5'>
+                        Sign in
+                    </button>
+                    <Auth/>
                 </div>
+                
                 <button 
                 className ={`bg-black text-white rounded-full px-3 p-2 text-sm font-medium
                 ${isActive ? "bg-green-700":"bg-black"}
                 `}>Get Started
                 </button>
+                
             </div>
         </div>
     </header>
