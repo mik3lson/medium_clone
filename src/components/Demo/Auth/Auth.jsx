@@ -8,10 +8,10 @@ import {AiOutlineMail} from 'react-icons/ai'
 import SignIn from './SignIn'
 import SignUp from './SignUp'
 
-const Auth=()=> {
+const Auth=({modal, setModal})=> {
    const [createUser, setCreateUser] = useState(false);
    const [signReq, setSignReq]= useState("sign-in");
-   const [modal, setModal] = useState(true);
+  
    const hidden = modal ? "visible opacity-100" :"invisible opacity-0"
     return(
         <Modal modal ={modal} setModal={setModal} hidden ={hidden}>
@@ -27,7 +27,7 @@ const Auth=()=> {
                     <LiaTimesSolid/>
                 </button>
                 <div className='flex flex-col justify-center items-center gap-[3rem]'>
-                    {signReq === "" ? (
+                    {signReq === "" ? ( 
                         <>
                     <h2 className='text-2xl pt-[5rem]'> {createUser ? "Join Medium" : "Welcome Back"}</h2>
  
