@@ -4,9 +4,11 @@ import Demo from "./components/Demo/Demo";
 import Home from "./components/home/home"; 
 import DemoHeader from './components/Demo/DemoHeader';
 import HomeHeader from './components/Home/HomeHeader';
+import { Blog } from './Context/Context';
+
 
 function App() {
-  const currentUser = false;
+    const { currentUser } = Blog();
     return (
       <>
         {currentUser ? <HomeHeader/> : <DemoHeader />}
