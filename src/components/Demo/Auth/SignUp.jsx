@@ -1,20 +1,76 @@
 import React from 'react';
 import Input from '../../../utils/Input'
 import { MdKeyboardArrowLeft } from 'react-icons/md';
+import { useState } from 'react';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../../firebase/firebase';  
+import { useNavigate } from 'react-router-dom';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { db } from '../../../firebase/firebase';
 
-const SignUp =({setSignReq})=>{
+
+const SignUp =({setSignReq, setModal})=>{
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState (false);
+  const [form, setForm] =useState({
+    username :"",
+    email : "",
+    password:"",
+    rePassword :"",
+  });
+
+    const handleSubmit = async (e) =>{
+    e.preventDefault();
+    console.log(form);
+    if (form[("username", "email", "password", "rePassword")] === "" ){
+      toast.error("All fields are required");
+    } else if (form["password"] !== form["rePassword"]){
+      toast.error("Passwords do not match");
+      return;
+    } else {
+      setLoading (true);
+      const {user} = await createUserWithEmailAndPassword(
+        auth, 
+        form.email, 
+        form.password
+      );
+      
+      const ref = doc(db, "users", user.uid);
+      const userDoc = await getDoc(ref);
+
+      if (!userDoc.exists()) {
+        await setDoc(ref, {
+          userId: user.uid,
+          username: form.username,
+          email: form.email,
+          userImg: "",
+          bio:"",
+          });
+          navigate("/");
+          toast.success("User have been Signed in");
+          setModal(false);
+
+        }
+        setLoading (false);
+    }
+    }; 
+    
     return (
       <div className ='size mt-[6rem] text-center'>
         <h2 className='text 3xl'> Sign Up with Email</h2>
         <p className ='w-full sm:w-[25rem] mx-auto py-[3rem]'>
           Enter the email associated with your account, and we would send a link to your inbox
         </p>
-        <form className ="flex flex-col gap-4">
-          <Input type ='text' title ="username"/>
-          <Input type ="email" title ="email"/>
-          <Input type ="password" title ="password"/>
-          <Input type ="password" title ="confirm password"/>
-          <button className='px-4 py-1 text-sm rounded-full bg-green-700 hover:bg-green-800 text-white w-fit mx-auto'>
+        <form onSubmit={handleSubmit} className ="flex flex-col gap-4">
+          <Input form ={form} setForm ={setForm} type ='text' title ="username"/>
+          <Input form ={form} setForm ={setForm} type ="email" title ="email"/>
+          <Input form ={form} setForm ={setForm} type ="password" title ="password"/>
+          <Input form ={form} setForm ={setForm} type ="password" title ="rePassword"/>
+          <button className={`first-letter:px-4 py-1 text-sm rounded-full bg-green-700 hover:bg-green-800 text-white w-fit mx-auto
+            ${loading ? "opacity-50 pointer-events-none" : ""}
+            `}>
             Sign Up
           </button>
         </form>
