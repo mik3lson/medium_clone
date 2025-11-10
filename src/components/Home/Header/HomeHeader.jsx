@@ -10,15 +10,21 @@ import Modal from '../../../utils/Modal';
 import { useState } from 'react';
 import UserModal from './UserModal';
 import { TbRuler2 } from 'react-icons/tb';
+import { Blog } from '../../../Context/Context';
+import Loading from '../../Loading/Loading';
 
 
 
 const HomeHeader =()=>{
+    const {allUsers, userLoading, currentUser} = Blog();
     const [modal , setModal] = useState(false);
     const [searchModal, setSearchModal] = useState(false);
 
+    const getUserData = allUsers.find((user) => user.id === currentUser?.uid);
+
     return(
         <header className="border-b border-gray-200">
+            {userLoading && <Loading />}
             <div className ="size h-[60px] flex items-center justify-between">
                 <div className='flex items-center gap-3'>
                     <Link to = {"/"}>
@@ -48,7 +54,7 @@ const HomeHeader =()=>{
                         <img
                            onClick ={() => setModal(true)}
                            className="w-[2.3rem] hr-[2.3rem] object-cover rounded-full cursor-pointer"
-                           src="/profile.jpg" 
+                           src={getUserData?.userImg ? getUserData?.userImg : "/profile.jpg" }
                            alt ="profile image">
                         </img>
                         <span className="text-gray-500 cursor-pointer">
@@ -59,7 +65,7 @@ const HomeHeader =()=>{
                                className={`${
                                    modal ? "visible opacity-100" : "invisible opacity-0"
                                    } transition-all duration-100`}>
-                                <UserModal/>
+                                <UserModal setModal={setModal}/>
                             </div>
                         </Modal>
                     </div>

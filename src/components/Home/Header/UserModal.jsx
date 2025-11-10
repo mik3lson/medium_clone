@@ -11,7 +11,7 @@ import { secretEmail } from "../../../utils/helper";
 
 
 
-const UserModal =()=> {
+const UserModal =(setModal)=> {
       const {currentUser} = Blog();
     const userModal =[
         {
@@ -41,7 +41,7 @@ const UserModal =()=> {
        shadows rounded-md z-50 text-gray-500">
             <Link 
                 to ="/write" 
-                className="flex md:hidden items-center gap-1 text-gray-500">
+                className="flex md:hidden items-center gap-1 text-black-500">
                 <span className ="text-3xl">
                     <LiaEditSolid/>
                 </span>
@@ -50,9 +50,10 @@ const UserModal =()=> {
                 <div className="flex flex-col gap-4 border-b border-black-300 pb-5">
                     {userModal.map((link, i) =>(
                         <Link 
+                            onClick={() => setModal(false)}
                             className="group flex items-center gap-2 text-gray-500 hover:text-black/70"
                             key={i} 
-                            path ={link.path}
+                            to ={link.path}
                         >
                             <span className="text-2xl transform transition-transform duration-200 group-hover:scale-125 ">{link.icon}</span>
                             <h2 className="text-md transform transition-transform duration-200 group-hover:scale-110">{link.title}</h2>

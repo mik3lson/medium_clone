@@ -1,6 +1,7 @@
 import React from "react";
 
 const Modal = ({ children, modal, setModal }) => {
+  
   return (
     <>
       <div

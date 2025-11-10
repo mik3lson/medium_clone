@@ -1,0 +1,20 @@
+import react from 'react';
+
+const ProfileAbout=({getUserData, setEditModal}) => {
+    return (
+        <div className="w-full">
+           <p className ="text-1xl first-letter:uppercase font-Times">
+             {getUserData?.bio || getUserData?.username +" has no bio"}
+              </p>
+              <div className ="text-right">
+                <button 
+                    onClick={() => setEditModal(true)} 
+                    className ="border border-black py-2 px-5 rounded-full text-black mt-[3rem]">Edit
+                    </button>
+              </div>
+       </div>
+       
+    );
+};
+
+export default ProfileAbout;

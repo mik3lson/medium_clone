@@ -12,6 +12,8 @@ export default {
       fontFamily: {
         title: `gt-super, Georgia, Cambria,Times New Roman, Times, serif;`,
         texts: `sohne, Helvetica Neue, Helvetica, Arial, sans-serif`,
+        poppins: "Poppins, sans-serif",
+
       },
       gridTemplateColumns: {
         card: "repeat(auto-fit, minmax(280px, 1fr))",
